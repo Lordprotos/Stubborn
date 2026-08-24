@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Boutique - Stubborn{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>Nos sweat-shirts</h1>
+        </div>
+    </div>
+    
+    <!-- Filtres -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Filtrer par prix</h5>
+                    <div class="btn-group" role="group">
+                        <a href="{{ path('app_products') }}" 
+                           class="btn btn-sm {% if price_range is null %}btn-primary-custom{% else %}btn-outline-secondary{% endif %}">
+                            Tous
+                        </a>
+                        <a href="{{ path('app_products', {'price_range': '10-29'}) }}" 
+                           class="btn btn-sm {% if price_range == '10-29' %}btn-primary-custom{% else %}btn-outline-secondary{% endif %}">
+                            10€ - 29€
+                        </a>
+                        <a href="{{ path('app_products', {'price_range': '29-35'}) }}" 
+                           class="btn btn-sm {% if price_range == '29-35' %}btn-primary-custom{% else %}btn-outline-secondary{% endif %}">
+                            29€ - 35€
+                        </a>
+                        <a href="{{ path('app_products', {'price_range': '35-50'}) }}" 
+                           class="btn btn-sm {% if price_range == '35-50' %}btn-primary-custom{% else %}btn-outline-secondary{% endif %}">
+                            35€ - 50€
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Liste des produits -->
+    {% if products %}
+        <div class="row g-4">
+            {% for product in products %}
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm">
+                        <img src="{{ asset('assets/images/products/' ~ product.imageName) }}" 
+                             class="card-img-top" alt="{{ product.name }}" 
+                             style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text text-muted small">{{ product.description }}</p>
+                            <p class="h5 mb-0" style="color: var(--secondary-color);">
+                                {{ product.price|number_format(2, ',', ' ') }} €
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white border-top">
+                            <a href="{{ path('app_product_detail', {'id': product.id}) }}" 
+                               class="btn btn-primary-custom w-100 btn-sm">
+                                Voir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Aucun produit trouvé pour cette gamme de prix.
+        </div>
+    {% endif %}
+    
+    <!-- Lien retour -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">
+                Retour à l'accueil
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

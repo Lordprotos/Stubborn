@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Stubborn{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>Gestion des produits</h1>
+        </div>
+    </div>
+    
+    <!-- Formulaire d'ajout -->
+    <div class="row mb-5">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h5 class="card-title">Ajouter un nouveau produit</h5>
+                    
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.price) }}
+                            {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.price) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.imageName) }}
+                            {{ form_widget(form.imageName, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.imageName) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_widget(form.isFeatured, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isFeatured, 'Produit en avant') }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary-custom w-100">
+                            <i class="fas fa-plus me-2"></i> Ajouter le produit
+                        </button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Liste des produits -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mb-3">Liste des produits ({{ products|length }})</h3>
+        </div>
+    </div>
+    
+    {% if products %}
+        <div class="table-responsive mb-5">
+            <table class="table table-hover">
+                <thead style="background-color: var(--light-color);">
+                    <tr>
+                        <th>Image</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Featured</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>
+                                <img src="{{ asset('assets/images/products/' ~ product.imageName) }}" 
+                                     alt="{{ product.name }}" 
+                                     style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                            </td>
+                            <td>
+                                <strong>{{ product.name }}</strong><br>
+                                <small class="text-muted">{{ product.description }}</small>
+                            </td>
+                            <td>{{ product.price|number_format(2, ',', ' ') }} €</td>
+                            <td>
+                                {% if product.isFeatured %}
+                                    <span class="badge bg-success">Oui</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Non</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('app_admin_edit', {'id': product.id}) }}" 
+                                   class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </a>
+                                
+                                <form method="post" action="{{ path('app_admin_delete', {'id': product.id}) }}" style="display: inline;" 
+                                      onsubmit="return confirm('Êtes-vous sûr?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">Aucun produit trouvé.</div>
+    {% endif %}
+</div>
+{% endblock %}

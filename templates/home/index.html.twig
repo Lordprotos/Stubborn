@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stubborn - Accueil{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Bannière -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="bg-light p-5 rounded text-center" style="background: linear-gradient(135deg, #1a1a1a 0%, #ff6b35 100%); color: white;">
+                <h1 class="display-4 fw-bold">Stubborn</h1>
+                <p class="lead">Don't compromise on your look</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Présentation Stubborn -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="card-title">À propos de Stubborn</h2>
+                    <p class="card-text">
+                        Bienvenue chez Stubborn, votre destination pour des sweat-shirts de qualité supérieure. 
+                        Depuis Piccadilly Circus à Londres, nous vous proposons une collection exclusive de vêtements 
+                        confortables et tendance. Chaque pièce est sélectionnée avec soin pour vous offrir le meilleur 
+                        en matière de style et de confort.
+                    </p>
+                    <p>
+                        <strong>Email:</strong> stubborn@blabla.com<br>
+                        <strong>Adresse:</strong> Piccadilly Circus, London W1J 0DA, Royaume-Uni
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Produits en avant -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Nos sweat-shirts en avant</h2>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        {% for product in featured_products %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ asset('assets/images/products/' ~ product.imageName) }}" 
+                         class="card-img-top" alt="{{ product.name }}" style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-muted">{{ product.description }}</p>
+                        <p class="h5" style="color: var(--secondary-color);">{{ product.price|number_format(2, ',', ' ') }} €</p>
+                    </div>
+                    <div class="card-footer bg-white border-top">
+                        {% if app.user %}
+                            <a href="{{ path('app_product_detail', {'id': product.id}) }}" 
+                               class="btn btn-primary-custom w-100">
+                                Voir
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- CTA -->
+    {% if not app.user %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="mb-3">Découvrez notre collection complète en vous inscrivant ou en vous connectant</p>
+                <a href="{{ path('app_register') }}" class="btn btn-primary-custom btn-lg me-2">S'inscrire</a>
+                <a href="{{ path('app_login') }}" class="btn btn-outline-secondary btn-lg">Se connecter</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{{ path('app_products') }}" class="btn btn-primary-custom btn-lg">
+                    Voir tous nos produits
+                </a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

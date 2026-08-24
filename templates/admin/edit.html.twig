@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier produit - Stubborn{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h2 class="card-title mb-4">Modifier {{ product.name }}</h2>
+                    
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.name) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.price) }}
+                            {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.price) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.imageName) }}
+                            {{ form_widget(form.imageName, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.imageName) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '4'}}) }}
+                            {{ form_errors(form.description) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_widget(form.isFeatured, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isFeatured, 'Produit en avant') }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary-custom w-100 mb-2">
+                            <i class="fas fa-save me-2"></i> Enregistrer les modifications
+                        </button>
+                    {{ form_end(form) }}
+                    
+                    <a href="{{ path('app_admin') }}" class="btn btn-outline-secondary w-100">
+                        Retour à la gestion
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

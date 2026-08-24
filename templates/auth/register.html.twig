@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}S'inscrire - Stubborn{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">S'inscrire</h2>
+                    
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.name, 'Nom complet') }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Jean Dupont'}}) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.email, 'Email') }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'votre@email.com'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.password.first, 'Mot de passe') }}
+                            {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder': 'Votre mot de passe'}}) }}
+                            {{ form_errors(form.password.first) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.password.second, 'Confirmer le mot de passe') }}
+                            {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder': 'Confirmez votre mot de passe'}}) }}
+                            {{ form_errors(form.password.second) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form_label(form.deliveryAddress, 'Adresse de livraison') }}
+                            {{ form_widget(form.deliveryAddress, {'attr': {'class': 'form-control', 'placeholder': '123 Rue de la Paix, Paris'}}) }}
+                            {{ form_errors(form.deliveryAddress) }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary-custom w-100 mb-3">
+                            S'inscrire
+                        </button>
+                    {{ form_end(form) }}
+                    
+                    <hr>
+                    
+                    <div class="text-center">
+                        <p class="mb-2">Déjà inscrit?</p>
+                        <a href="{{ path('app_login') }}" class="btn btn-outline-secondary w-100">
+                            Se connecter ici
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="{{ path('app_home') }}">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
