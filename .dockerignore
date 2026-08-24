@@ -1,0 +1,12 @@
+.git
+.github
+.gitignore
+node_modules
+var/cache
+var/log
+vendor
+.env
+.env.local
+.env.*.local
+Dockerfile
+render.yaml
