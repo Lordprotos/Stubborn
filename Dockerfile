@@ -1,12 +1,12 @@
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
-    git unzip libicu-dev libzip-dev zlib1g-dev default-mysql-client \
-    && docker-php-ext-install intl zip pdo_mysql \
+    git unzip libicu-dev libzip-dev zlib1g-dev libpq-dev \
+    && docker-php-ext-install intl zip pdo pdo_pgsql \
     && rm -rf /var/lib/apt/lists/*
 
 # Vérification explicite pendant le build (important)
-RUN php -m | grep -i pdo && php -m | grep -i pdo_mysql
+RUN php -m | grep -i pdo && php -m | grep -i pdo_pgsql
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
